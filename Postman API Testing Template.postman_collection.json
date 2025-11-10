@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "84a3e983-0566-40e0-9662-c189e8a44d37",
+		"name": "Postman API Testing Template",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14958841"
+	},
+	"item": [
+		{
+			"name": "Template - See Post Response Script",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ===========================================\r",
+							"// Request: [Method] [URL]\r",
+							"// Purpose: [Description]\r",
+							"// Auth:    [Auth Type] [Auth Details]\r",
+							"// Expected status: [Response code] [Response Status]\r",
+							"// ===========================================\r",
+							"\r",
+							"// 🧩 ~~ Test Configuration ~~ 🧩\r",
+							"var runBaselineTests = pm.collectionVariables.get(\"runBaselineTests\");              // Set to false to skip baseline tests\r",
+							"var runFieldDefintionTests = pm.collectionVariables.get(\"runFieldDefintionTests\");  // Set to false to skip field definition tests\r",
+							"var runDatatypeTests = pm.collectionVariables.get(\"runDatatypeTests\");              // Set to false to skip datatype tests\r",
+							"var runFunctionalTests = pm.collectionVariables.get(\"runFunctionalTests\");          // Set to false to skip datatype tests \r",
+							"\r",
+							"// 🧩 ~~ Generic Uptime Tests ~~ 🧩\r",
+							"pm.test(\"[Service Name] Request Name - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"[Service Name] Request Name - Response status is OK\", function () {\r",
+							"    pm.expect(pm.response.status).to.eql(\"OK\");\r",
+							"});\r",
+							"\r",
+							"// Conditional check for further testing\r",
+							"if (pm.response.code === 200) \r",
+							"{\r",
+							"    // 🧩 ~~ Variable Declarations ~~ 🧩\r",
+							"    var jsonData = pm.response.json();\r",
+							"  \r",
+							"    if(runBaselineTests)\r",
+							"    {\r",
+							"        // 🧩 ~~ Field Definition Tests ~~ 🧩\r",
+							"        if(runFieldDefintionTests)\r",
+							"        {\r",
+							"            pm.test(\"[Service] Request Name - Response contains'success' field\", function () {\r",
+							"                pm.expect(jsonData).to.have.property(\"success\");\r",
+							"            });\r",
+							"        }\r",
+							"\r",
+							"        // 🧩 ~~ Datatype Tests ~~ 🧩\r",
+							"        if (runDatatypeTests)\r",
+							"        {\r",
+							"            pm.test(\"[Service] Request Name - 'success' is a boolean\", function () {\r",
+							"                pm.expect(typeof (jsonData.success)).to.eq(\"boolean\");\r",
+							"            });\r",
+							"        }\r",
+							"\r",
+							"        // 🧩 ~~ Functional Tests ~~ 🧩\r",
+							"        if (runFunctionalTests)\r",
+							"        {\r",
+							"            pm.test(\"[Service] Request Name - 'success' is true\", function () {\r",
+							"                pm.expect(jsonData.success).to.be.true;\r",
+							"            });\r",
+							"        }\r",
+							"    }\r",
+							"    \r",
+							"    console.log(pm.info.requestName + \" : PASS\");\r",
+							"} \r",
+							"else \r",
+							"{\r",
+							"    console.log(pm.info.requestName + \" : FAIL\");\r",
+							"    console.log(pm.response.text());//log response body to console if request fails to aid debugging\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "insert-url",
+					"host": [
+						"insert-url"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
